@@ -9,9 +9,9 @@ namespace Graphql.Data.Repositories
     {
         private readonly AppDbContext _context;
 
-        public CategoryRepository(AppDbContext context)
+        public CategoryRepository(IDbContextFactory<AppDbContext> context)
         {
-            _context = context;
+            _context = context.CreateDbContext();
         }
 
         public async Task<Category> AddCategory(Category category)

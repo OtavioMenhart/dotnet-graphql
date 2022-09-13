@@ -19,7 +19,7 @@ IConfigurationRoot configuration = new ConfigurationBuilder()
 var connectionString = configuration.
        GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddPooledDbContextFactory<AppDbContext>(b => b.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryQuery, CategoryQuery>();
