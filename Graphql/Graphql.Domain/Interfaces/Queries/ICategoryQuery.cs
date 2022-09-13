@@ -4,6 +4,6 @@ namespace Graphql.Domain.Interfaces.Queries
 {
     public interface ICategoryQuery
     {
-        IEnumerable<Category> GetAllCategories();
+        Task<IEnumerable<Category>> GetAllCategories();
     }
 }

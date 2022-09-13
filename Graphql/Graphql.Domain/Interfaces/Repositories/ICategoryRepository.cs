@@ -4,6 +4,7 @@ namespace Graphql.Domain.Interfaces.Repositories
 {
     public interface ICategoryRepository
     {
-        IEnumerable<Category> GetAll();
+        Task<IEnumerable<Category>> GetAll();
+        Task<Category> AddCategory(Category category); 
     }
 }

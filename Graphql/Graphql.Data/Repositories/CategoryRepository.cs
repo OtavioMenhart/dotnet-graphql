@@ -1,6 +1,7 @@
 ﻿using Graphql.Data.Context;
 using Graphql.Domain.Entities;
 using Graphql.Domain.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Graphql.Data.Repositories
 {
@@ -13,9 +14,16 @@ namespace Graphql.Data.Repositories
             _context = context;
         }
 
-        public IEnumerable<Category> GetAll()
+        public async Task<Category> AddCategory(Category category)
         {
-            return _context.Categories.ToList();
+            await _context.Categories.AddAsync(category);
+            await _context.SaveChangesAsync();
+            return category;
+        }
+
+        public async Task<IEnumerable<Category>> GetAll()
+        {
+            return await _context.Categories.ToListAsync();
         }
     }
 }

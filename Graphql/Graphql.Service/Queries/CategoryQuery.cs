@@ -13,9 +13,9 @@ namespace Graphql.Service.Queries
             _categoryRepository = categoryRepository;
         }
 
-        public IEnumerable<Category> GetAllCategories()
+        public async Task<IEnumerable<Category>> GetAllCategories()
         {
-            return _categoryRepository.GetAll();
+            return await _categoryRepository.GetAll();
         }
     }
 }

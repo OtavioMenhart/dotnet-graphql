@@ -2,16 +2,33 @@ using Graphql.Data.Context;
 using Graphql.Data.Repositories;
 using Graphql.Domain.Interfaces.Queries;
 using Graphql.Domain.Interfaces.Repositories;
+using Graphql.Domain.Interfaces.Services;
 using Graphql.Service.Queries;
+using Graphql.Service.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AppDbContext>();
+string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+IConfigurationRoot configuration = new ConfigurationBuilder()
+   .SetBasePath(Directory.GetCurrentDirectory())
+   .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+   .AddJsonFile($"appsettings.{environment}.json", optional: true)
+   .Build();
+
+var connectionString = configuration.
+       GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryQuery, CategoryQuery>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
 
-builder.Services.AddGraphQLServer().AddQueryType<CategoryQuery>();
+
+builder.Services.AddGraphQLServer()
+                .AddQueryType<CategoryQuery>()
+                .AddMutationType<CategoryService>();
 
 var app = builder.Build();
 

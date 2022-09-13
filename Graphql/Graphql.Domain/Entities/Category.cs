@@ -5,10 +5,7 @@ namespace Graphql.Domain.Entities
 {
     public class Category
     {
-        public Category()
-        {
-            Products = new Collection<Product>();
-        }
+        [Key]
         public int CategoryId { get; set; }
 
         [Required]
@@ -18,6 +15,5 @@ namespace Graphql.Domain.Entities
         [Required]
         [MaxLength(300)]
         public string UrlImage { get; set; }
-        public ICollection<Product> Products { get; set; }
     }
 }
