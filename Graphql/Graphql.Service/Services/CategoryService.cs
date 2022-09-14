@@ -18,12 +18,34 @@ namespace Graphql.Service.Services
             _mapper = mapper;
         }
 
-        public async Task<CategoryResponse> AddCategory(CategoryRequest request)
+        public async Task<CategoryResponse> AddCategory(CategoryPostRequest request)
         {
             Category newCategory = _mapper.Map<Category>(request);
-            Category categoryAdded = await _categoryRepository.AddCategory(newCategory);
+            Category categoryAdded = await _categoryRepository.InsertAsync(newCategory);
             CategoryResponse response = _mapper.Map<CategoryResponse>(categoryAdded);
             return response;
+        }
+
+        public async Task<bool> DeleteCategory(int id)
+        {
+            await VerifyIfExists(id);
+
+            bool deleted = await _categoryRepository.DeleteAsync(id);
+            return deleted;
+        }
+
+        public async Task<CategoryResponse> UpdateCategory(CategoryPutRequest request)
+        {
+            await VerifyIfExists(request.CategoryId);
+            Category categoryToUpdate = _mapper.Map<Category>(request);
+            categoryToUpdate = await _categoryRepository.UpdateAsync(categoryToUpdate);
+            return _mapper.Map<CategoryResponse>(categoryToUpdate);
+        }
+        private async Task VerifyIfExists(int id)
+        {
+            bool exist = await _categoryRepository.ExistAsync(id);
+            if (!exist)
+                throw new KeyNotFoundException("Category doesn't exists");
         }
     }
 }

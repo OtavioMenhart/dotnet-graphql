@@ -1,17 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Graphql.Domain.Entities
+﻿namespace Graphql.Domain.Dto.Request
 {
-    public class Category : BaseEntity
+    public class CategoryPostRequest
     {
-        [Required]
-        [MaxLength(80)]
         [GraphQLDescription("Name of category")]
         public string Name { get; set; }
-
-        [Required]
-        [MaxLength(300)]
         [GraphQLDescription("Url image address of category")]
         public string UrlImage { get; set; }
     }
 }
+

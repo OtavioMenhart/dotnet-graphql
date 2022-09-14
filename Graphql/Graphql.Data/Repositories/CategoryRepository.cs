@@ -5,25 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Graphql.Data.Repositories
 {
-    public class CategoryRepository : ICategoryRepository
+    public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
     {
-        private readonly AppDbContext _context;
+        private readonly DbSet<Category> _dataSet;
 
-        public CategoryRepository(IDbContextFactory<AppDbContext> context)
+        public CategoryRepository(IDbContextFactory<AppDbContext> context) : base(context)
         {
-            _context = context.CreateDbContext();
+            _dataSet = context.CreateDbContext().Set<Category>();
         }
 
-        public async Task<Category> AddCategory(Category category)
-        {
-            await _context.Categories.AddAsync(category);
-            await _context.SaveChangesAsync();
-            return category;
-        }
-
-        public async Task<IEnumerable<Category>> GetAll()
-        {
-            return await _context.Categories.ToListAsync();
-        }
     }
 }

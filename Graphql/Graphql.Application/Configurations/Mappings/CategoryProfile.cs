@@ -9,8 +9,9 @@ namespace Graphql.Application.Configurations.Mappings
     {
         public CategoryProfile()
         {
-            CreateMap<CategoryRequest, Category>();
-            CreateMap<Category, CategoryResponse>();
+            CreateMap<CategoryPostRequest, Category>();
+            CreateMap<Category, CategoryResponse>().ForMember(r => r.CategoryId, opt => opt.MapFrom(src => src.Id));
+            CreateMap<CategoryPutRequest, Category>().ForMember(r => r.Id, opt => opt.MapFrom(src => src.CategoryId));
         }
     }
 }
