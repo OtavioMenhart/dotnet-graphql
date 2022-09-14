@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="GraphQL.Server.Ui.Voyager" Version="7.1.1" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="12.13.2" />
     <PackageReference Include="HotChocolate.Data.EntityFramework" Version="12.13.2" />
@@ -24,10 +25,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Graphql.Domain\Graphql.Domain.csproj" />
     <ProjectReference Include="..\Graphql.Service\Graphql.Service.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Configurations\" />
   </ItemGroup>
 
 </Project>

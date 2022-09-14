@@ -1,16 +1,7 @@
+
 version: '3.4'
 
 services:
-  graphql.application:
-    image: ${DOCKER_REGISTRY-}graphqlapplication
-    build:
-      context: .
-      dockerfile: Graphql.Application/Dockerfile
-    ports:
-      - "8000:80"
-    depends_on:
-      - db
-
   db:
     image: "mcr.microsoft.com/mssql/server:2019-latest"
     environment:
